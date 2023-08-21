@@ -102,7 +102,6 @@ export class HeaderComponent implements OnInit, OnChanges {
     }
   }
 
-
   /**
    * 上一筆資料
    */
