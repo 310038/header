@@ -43,7 +43,17 @@ import { TimesIcon } from 'primeng/icons/times';
 })
 export class HeaderComponent implements OnInit, OnChanges {
 
-  @Input() value: any;
+  #value: any;
+  @Input()
+  set value(value: any) {
+    this.#value = value;
+    if(value && value.length > 0){
+      this.currentRowChange(0);
+    }
+    else{
+      this.currentRowChange(-1);
+    }
+  }
   @Input() titleTemplate!: TemplateRef<any>;
   @Input() detailTemplate!: TemplateRef<any>;
   @Input() listTemplate!: TemplateRef<any>;
@@ -67,7 +77,8 @@ export class HeaderComponent implements OnInit, OnChanges {
    */
   ngOnInit(): void {
     this.#initValue = this.value;
-    this.currentRowChange(0);
+        // this.currentRowChange(0); 孫博原本有這段，我認為可以刪掉，
+    //因為現在在 setter 有做this.currentRowChange(0)了;
   }
   /**
    * ngOnChanges
@@ -120,10 +131,6 @@ export class HeaderComponent implements OnInit, OnChanges {
    * @param searchText
    */
   onSearch(searchText: string): void {
-
-    // 自主更改
-    this.currentRowChange(0)
-
     this.search.emit(searchText);
   }
 
