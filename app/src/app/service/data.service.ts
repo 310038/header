@@ -81,7 +81,6 @@ export class DataService {
       if (!text) {
         return this.dataList;
       }
-      // ?.等於&& ，條件判斷語句，如果data存在，就執行後面的語句，如果不存在，就不執行後面的語句
       this.searchedDataList = this.dataList.filter((x) =>
         x?.name.toLowerCase().includes(text.toLowerCase())
       );

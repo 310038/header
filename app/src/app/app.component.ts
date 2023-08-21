@@ -1,7 +1,7 @@
 
 import { HeaderComponent } from 'header';
 import { DataService } from './service/data.service';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
@@ -18,6 +18,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
@@ -41,23 +42,25 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   dataService: DataService = inject(DataService);
   currentRow: any;
   value!: any;
-  // 讓使用header的人自己決定要不要使用search bar功能（isSearchDisabled）
   isSearchDisabled: boolean = false;
 
   ngOnInit(): void {
-    this.value= this.dataService.getData(); //透過dataService的getData()方法，將資料撈進來header.component
+    this.value= this.dataService.getData();
   }
 
   onSearch(text: string) {
     this.value= this.dataService.search(text);
+
   }
 
-   onChange(row: any) {
+  onChange(row: any) {
+    console.log(row);
     this.currentRow = row;
   }
 }
+
 

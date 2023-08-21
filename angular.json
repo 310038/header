@@ -33,6 +33,15 @@
               "zone.js/testing"
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "header/**/*.ts",
+              "header/**/*.html"
+            ]
+          }
         }
       }
     },

@@ -3,10 +3,8 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
   TemplateRef,
 } from '@angular/core';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -41,16 +39,25 @@ import { TimesIcon } from 'primeng/icons/times';
     TimesIcon,
   ],
 })
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent implements OnInit {
 
-  @Input() value: any;
+  #value: any;
+  @Input()
+  set value(value: any) {
+    this.#value = value;
+    this.currentRowChange(0);
+  }
+  get value(): any {
+    return this.#value;
+  }
+
   @Input() titleTemplate!: TemplateRef<any>;
   @Input() detailTemplate!: TemplateRef<any>;
   @Input() listTemplate!: TemplateRef<any>;
   @Input() isSearchDisabled: boolean = false;
 
   @Output() search = new EventEmitter<any>();
-  @Output() change = new EventEmitter<any>();
+  @Output() RowChange = new EventEmitter<any>();
 
   yamlDocument: any;
   searchText: string = '';
@@ -67,15 +74,8 @@ export class HeaderComponent implements OnInit, OnChanges {
    */
   ngOnInit(): void {
     this.#initValue = this.value;
-    this.currentRowChange(0);
   }
-  /**
-   * ngOnChanges
-   * @param changes
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    this.currentRowChange(this.#currentIndex);
-  }
+
   /**
    * currentRowChange
    * @param rowIndex
@@ -87,10 +87,9 @@ export class HeaderComponent implements OnInit, OnChanges {
         this.yamlDocument = jsyaml.dump(this.#currentRow);
       }
       this.#currentIndex = rowIndex;
-      this.change.emit(this.#currentRow);
+      this.RowChange.emit(this.#currentRow);
     }
   }
-
 
   /**
    * 上一筆資料
@@ -120,10 +119,6 @@ export class HeaderComponent implements OnInit, OnChanges {
    * @param searchText
    */
   onSearch(searchText: string): void {
-
-    // 自主更改
-    this.currentRowChange(0)
-
     this.search.emit(searchText);
   }
 
@@ -132,10 +127,9 @@ export class HeaderComponent implements OnInit, OnChanges {
   */
   onSearchClear(): void {
     this.searchText = '';
-    this.value = this.#initValue; // 回復原始資料
+    this.value = this.#initValue;
     this.currentRowChange(this.#currentIndex);
   }
-
 
   /**
    * 是否使用預設的 template
