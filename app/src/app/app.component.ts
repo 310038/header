@@ -1,7 +1,7 @@
 
 import { HeaderComponent } from 'header';
 import { DataService } from './service/data.service';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
@@ -41,7 +41,7 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   dataService: DataService = inject(DataService);
   currentRow: any;
   value!: any;

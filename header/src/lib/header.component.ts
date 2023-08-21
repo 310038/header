@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   @Input() isSearchDisabled: boolean = false;
 
   @Output() search = new EventEmitter<any>();
-  @Output() change = new EventEmitter<any>();
+  @Output() RowChange = new EventEmitter<any>();
 
   yamlDocument: any;
   searchText: string = '';
@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit, OnChanges {
    * ngOnChanges
    * @param changes
    */
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.currentRowChange(this.#currentIndex);
   }
   /**
@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit, OnChanges {
         this.yamlDocument = jsyaml.dump(this.#currentRow);
       }
       this.#currentIndex = rowIndex;
-      this.change.emit(this.#currentRow);
+      this.RowChange.emit(this.#currentRow);
     }
   }
 

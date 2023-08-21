@@ -20,7 +20,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "lib",
+            "prefix": "his",
             "style": "camelCase"
           }
         ],
@@ -28,10 +28,12 @@
           "error",
           {
             "type": "element",
-            "prefix": "lib",
+            "prefix": "his",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-explicit-any":"off"
       }
     },
     {
